@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Prova Discursiva - Mobile</title>
+
+<style>
+
+body{
+font-family:Arial, Helvetica, sans-serif;
+background:#eef2f7;
+margin:0;
+}
+
+/* LOGIN */
+
+.login{
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.box{
+background:white;
+padding:40px;
+width:420px;
+border-radius:8px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+input{
+width:100%;
+padding:12px;
+margin-bottom:15px;
+border:1px solid #ccc;
+border-radius:5px;
+}
+
+button{
+padding:12px;
+border:none;
+background:#2c3e50;
+color:white;
+border-radius:5px;
+cursor:pointer;
+}
+
+/* PROVA */
+
+.header{
+background:#2c3e50;
+color:white;
+padding:20px;
+display:flex;
+justify-content:space-between;
+}
+
+.container{
+max-width:900px;
+margin:40px auto;
+background:white;
+padding:40px;
+border-radius:8px;
+box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
+
+.questao{
+margin-bottom:30px;
+}
+
+textarea{
+width:100%;
+height:120px;
+padding:10px;
+border:1px solid #ccc;
+border-radius:5px;
+resize:none;
+}
+
+.salvar{
+margin-top:10px;
+background:#2980b9;
+}
+
+.finalizar{
+margin-top:30px;
+background:#27ae60;
+}
+
+.status{
+font-size:13px;
+color:green;
+margin-top:5px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- LOGIN -->
+
+<div class="login" id="telaLogin">
+
+<div class="box">
+
+<h2>Prova Discursiva - Mobile</h2>
+
+<input id="nome" placeholder="Nome do aluno">
+
+<input id="turma" placeholder="Turma">
+
+<input id="senha" type="password" placeholder="Senha da prova">
+
+<button onclick="entrar()">Entrar na prova</button>
+
+</div>
+
+</div>
+
+<!-- PROVA -->
+
+<div id="telaProva" style="display:none">
+
+<div class="header">
+
+<div>Prova de Programação Mobile</div>
+
+<div id="infoAluno"></div>
+
+</div>
+
+<div class="container">
+
+
+<!-- Botão na prova -->
+<button class="finalizar" onclick="finalizar()">Finalizar Prova</button>
+
+<script>
+// FUNÇÕES
+
+function entrar() {
+   // código de login
+}
+
+function salvar(n) {
+   // código de salvar resposta
+}
+
+function finalizar() {
+   // aqui você coloca o código que vai registrar todas as respostas
+   let fim = new Date()
+   alert("Prova enviada")
+   console.log("Aluno:", localStorage.getItem("nomeAluno"))
+   console.log("Turma:", localStorage.getItem("turmaAluno"))
+   console.log("Início:", localStorage.getItem("inicioProva"))
+
+   // Se tiver 15 perguntas
+   for(let i=1; i<=15; i++){
+       console.log("Q"+i+":", localStorage.getItem("questao"+i))
+   }
+}
+
+// BLOQUEIOS
+document.addEventListener("copy", e => e.preventDefault())
+// ...
+</script>
+
+<div class="questao">
+
+<h3>1) Explique o que é desenvolvimento mobile.</h3>
+
+<textarea id="q1"></textarea>
+<button class="salvar" onclick="salvar(1)">Salvar resposta</button>
+<div class="status" id="s1"></div>
+
+</div>
+
+
+<div class="questao">
+
+<h3>2) Cite dois sensores do celular e explique como os apps utilizam-os.</h3>
+
+<textarea id="q2"></textarea>
+
+<button class="salvar" onclick="salvar(2)">Salvar resposta</button>
+
+<div class="status" id="s2"></div>
+
+</div>
+
+
+<div class="questao">
+
+<h3>3) Explique a diferença entre aplicativo nativo e híbrido.</h3>
+
+<textarea id="q3"></textarea>
+
+<button class="salvar" onclick="salvar(3)">Salvar resposta</button>
+
+<div class="status" id="s3"></div>
+
+</div>
+
+
+<div class="questao">
+
+<h3>4) Cite três exemplos de aplicativos mobile que você utiliza no seu dia a dia e explique para que servem.</h3>
+
+<textarea id="q4"></textarea>
+
+<button class="salvar" onclick="salvar(4)">Salvar resposta</button>
+
+<div class="status" id="s4"></div>
+
+</div>
+
+<div class="questao">
+
+<h3>5) Qual a diferença entre aplicativo mobile e site web?.</h3>
+
+<textarea id="q5"></textarea>
+
+<button class="salvar" onclick="salvar(5)">Salvar resposta</button>
+
+<div class="status" id="s5"></div>
+
+</div>
+
+
+<div class="questao">
+
+<h3>6) Explique o que significa dizer que um aplicativo é instalado no celular.</h3>
+
+<textarea id="q6"></textarea>
+
+<button class="salvar" onclick="salvar(6)">Salvar resposta</button>
+
+<div class="status" id="s6"></div>
+
+</div>
+
+<div class="questao">
+
+<h3>7) Por que é importante que um aplicativo tenha botões claros e fáceis de usar?</h3>
+
+<textarea id="q7"></textarea>
+
+<button class="salvar" onclick="salvar(7)">Salvar resposta</button>
+
+<div class="status" id="s7"></div>
+
+</div>
+
+<div class="questao">
+
+<h3>8) Dê um exemplo de um aplicativo que tenha boa experiência de uso e explique por quê.</h3>
+
+<textarea id="q8"></textarea>
+
+<button class="salvar" onclick="salvar(8)">Salvar resposta</button>
+
+<div class="status" id="s8"></div>
+
+</div>
+
+<div class="questao">
+
+<h3>10) O que pode acontecer se um aplicativo tiver uma interface confusa?</h3>
+
+<textarea id="q10"></textarea>
+
+<button class="salvar" onclick="salvar(10)">Salvar resposta</button>
+
+<div class="status" id="s10"></div>
+
+</div>
+
+<div class="questao">
+
+<h3>11) Explique como um aplicativo pode usar o GPS do celular.</h3>
+
+<textarea id="q11"></textarea>
+
+<button class="salvar" onclick="salvar(11)">Salvar resposta</button>
+
+<div class="status" id="s11"></div>
+
+</div>
+
+<div class="questao">
+
+<h3>12) Como um aplicativo pode utilizar a câmera do celular?</h3>
+
+<textarea id="q12"></textarea>
+
+<button class="salvar" onclick="salvar(12)">Salvar resposta</button>
+
+<div class="status" id="s12"></div>
+
+</div>
+
+<div class="questao">
+
+<h3>13) Cite um aplicativo que utiliza localização (GPS).</h3>
+
+<textarea id="q13"></textarea>
+
+<button class="salvar" onclick="salvar(13)">Salvar resposta</button>
+
+<div class="status" id="s13"></div>
+
+</div>
+
+<div class="questao">
+
+<h3>14) Explique o que é uma atualização de aplicativo.</h3>
+
+<textarea id="q14"></textarea>
+
+<button class="salvar" onclick="salvar(14)">Salvar resposta</button>
+
+<div class="status" id="s14"></div>
+
+</div>
+
+<div class="questao">
+
+<h3>15) Por que os aplicativos precisam ser atualizados regularmente?</h3>
+
+<textarea id="q15"></textarea>
+
+<button class="salvar" onclick="salvar(15)">Salvar resposta</button>
+
+<div class="status" id="s15"></div>
+
+</div>
+
+<div class="questao">
+
+<h3>16) Cite um exemplo de aplicativo que pode funcionar offline.</h3>
+
+<textarea id="q16"></textarea>
+
+<button class="salvar" onclick="salvar(16)">Salvar resposta</button>
+
+<div class="status" id="s16"></div>
+
+</div>
+
+<div class="questao">
+
+<h3>17) O que pode acontecer se um aplicativo pedir muitas permissões no celular?</h3>
+
+<textarea id="q17"></textarea>
+
+<button class="salvar" onclick="salvar(17)">Salvar resposta</button>
+
+<div class="status" id="s17"></div>
+
+</div>
+
+<div class="questao">
+
+<h3>18) Cite duas formas de proteger os dados do usuário em aplicativos.</h3>
+
+<textarea id="q18"></textarea>
+
+<button class="salvar" onclick="salvar(18)">Salvar resposta</button>
+
+<div class="status" id="s18"></div>
+
+</div>
+
+<div class="questao">
+
+<h3>19) Um estudante criou um aplicativo que mostra a previsão do tempo, mas o aplicativo só funciona quando o celular está conectado à internet. Explique por que esse aplicativo precisa da internet e o que aconteceria se ele tentasse funcionar offline.</h3>
+
+<textarea id="q19"></textarea>
+
+<button class="salvar" onclick="salvar(19)">Salvar resposta</button>
+
+<div class="status" id="s19"></div>
+
+</div>
+
+<div class="questao">
+
+<h3>20) Um aplicativo de mapas utiliza o GPS do celular para mostrar a localização do usuário. Explique como o aplicativo consegue descobrir onde a pessoa está e por que essa informação é importante para o funcionamento do aplicativo.</h3>
+
+<textarea id="q20"></textarea>
+
+<button class="salvar" onclick="salvar(20)">Salvar resposta</button>
+
+<div class="status" id="s20"></div>
+
+</div>
+
+<div class="questao">
+
+<h3>21) Um aplicativo pede permissão para acessar a câmera, a localização e os contatos do usuário. Explique por que é importante que o usuário preste atenção nessas permissões antes de instalar o aplicativo.</h3>
+
+<textarea id="q21"></textarea>
+
+<button class="salvar" onclick="salvar(21)">Salvar resposta</button>
+
+<div class="status" id="s21"></div>
+
+</div>
+
+<div class="questao">
+
+<h3>22) Imagine que um aplicativo possui muitos botões, menus confusos e textos difíceis de entender. Explique como isso pode afetar a experiência do usuário e o que poderia ser feito para melhorar esse aplicativo.</h3>
+
+<textarea id="q22"></textarea>
+
+<button class="salvar" onclick="salvar(22)">Salvar resposta</button>
+
+<div class="status" id="s22"></div>
+
+</div>
+
+
+
+<button class="finalizar" onclick="finalizar()">Finalizar Prova</button>
+
+</div>
+
+</div>
+
+<script>
+// 40 SENHAS ÚNICAS
+let senhasPermitidas = [
+"mobile01","mobile02","mobile03","mobile04","mobile05",
+"mobile06","mobile07","mobile08","mobile09","mobile10",
+"mobile11","mobile12","mobile13","mobile14","mobile15",
+"mobile16","mobile17","mobile18","mobile19","mobile20",
+"mobile21","mobile22","mobile23","mobile24","mobile25",
+"mobile26","mobile27","mobile28","mobile29","mobile30",
+"mobile31","mobile32","mobile33","mobile34","mobile35",
+"mobile36","mobile37","mobile38","mobile39","mobile40"
+];
+
+// LOGIN
+function entrar(){
+let nome=document.getElementById("nome").value
+let turma=document.getElementById("turma").value
+let senha=document.getElementById("senha").value
+
+if(nome=="" || turma=="" || senha==""){
+alert("Preencha todos os campos")
+return
+}
+
+// Verifica senha permitida
+if(!senhasPermitidas.includes(senha)){
+alert("Senha inválida ou já utilizada")
+return
+}
+
+// Remove a senha para que não seja reutilizada
+senhasPermitidas = senhasPermitidas.filter(s=>s!==senha);
+
+localStorage.setItem("nomeAluno",nome)
+localStorage.setItem("turmaAluno",turma)
+localStorage.setItem("inicioProva", new Date())
+
+document.getElementById("telaLogin").style.display="none"
+document.getElementById("telaProva").style.display="block"
+
+document.getElementById("infoAluno").innerText =
+nome + " | Turma: " + turma
+}
+
+// SALVAR QUESTÕES
+function salvar(n){
+let resposta = document.getElementById("q"+n).value
+localStorage.setItem("questao"+n,resposta)
+document.getElementById("s"+n).innerText="Resposta salva"
+}
+
+// FINALIZAR
+function finalizar(){
+let fim = new Date()
+alert("Prova enviada")
+console.log("Aluno:", localStorage.getItem("nomeAluno"))
+console.log("Turma:", localStorage.getItem("turmaAluno"))
+console.log("Início:", localStorage.getItem("inicioProva"))
+console.log("Fim:", fim)
+console.log("Q1:", localStorage.getItem("questao1"))
+console.log("Q2:", localStorage.getItem("questao2"))
+console.log("Q3:", localStorage.getItem("questao3"))
+}
+
+// BLOQUEIOS
+document.addEventListener("copy", e => e.preventDefault())
+document.addEventListener("paste", e => e.preventDefault())
+document.addEventListener("cut", e => e.preventDefault())
+document.addEventListener("contextmenu", e => e.preventDefault())
+
+document.addEventListener("keydown",function(e){
+if(e.ctrlKey && (e.key=="c" || e.key=="v" || e.key=="x")){
+e.preventDefault()
+alert("Copiar ou colar não é permitido")
+}
+})
+
+// DETECTAR TROCA DE ABA
+document.addEventListener("visibilitychange", function(){
+if(document.hidden){
+alert("Trocar de aba não é permitido!")
+}
+})
+</script>
+
+</body>
+</html>
