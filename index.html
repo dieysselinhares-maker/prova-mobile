@@ -173,7 +173,7 @@ document.addEventListener("copy", e => e.preventDefault())
 // ...
 
 function enviarParaSheets(){
-  let url = "https://script.google.com/macros/s/AKfycbwxTFIsCIuVe4wGTd4yTnbIw5tpZXvVN57zbcqOv0ve-XFvdjKi5iGGNbaHjXD7SjkT/exec"; // a URL do Apps Script que você publicou
+  let url = "https://script.google.com/macros/s/AKfycbzQZ7bv3JRCecpMlfkEW74IIH8TSFrIWOQUGtIDyBkvxzLKMagaqYC-sE38n94EI3Fn/exec"; // substitua pela URL do Web App
 
   let dados = {
     nome: localStorage.getItem("nomeAluno"),
@@ -190,7 +190,13 @@ function enviarParaSheets(){
     headers: {"Content-Type": "application/json"}
   })
   .then(res => res.json())
-  .then(res => console.log("Enviado para Sheets:", res))
+  .then(res => {
+      if(res.status === "ok"){
+          console.log("Enviado para Sheets com sucesso");
+      } else {
+          console.error("Erro no Sheets:", res.mensagem);
+      }
+  })
   .catch(err => console.error("Erro ao enviar:", err));
 }
   
@@ -510,30 +516,13 @@ document.getElementById("s"+n).innerText="Resposta salva"
 }
 
 // FINALIZAR
-function finalizar(){
-    let fim = new Date();
-
+function finalizar() {
     alert("Prova enviada");
 
-    // Log no console (opcional)
-    console.log("Aluno:", localStorage.getItem("nomeAluno"));
-    console.log("Turma:", localStorage.getItem("turmaAluno"));
-    console.log("Início:", localStorage.getItem("inicioProva"));
-    console.log("Fim:", fim);
-
-    // Mostra todas as respostas no console
-    for(let i=1; i<=22; i++){
-        console.log("Q"+i+":", localStorage.getItem("questao"+i));
-    }
-
-    // ESCONDER A PROVA
     document.getElementById("telaProva").style.display = "none";
-
-    // MOSTRAR TELA DE ENCERRAMENTO
     document.getElementById("telaEncerrada").style.display = "block";
 
-    // Enviar para Google Sheets
-    enviarParaSheets();
+    enviarParaSheets(); // envia para o Sheets
 }
 
 // BLOQUEIOS
@@ -560,6 +549,7 @@ alert("Trocar de aba não é permitido!")
 </body>
 
 </html>
+
 
 
 
