@@ -173,6 +173,8 @@ document.getElementById("s"+n).innerText="Resposta salva"
 
 function finalizarProva(){
 
+function finalizarProva(){
+
 let nome=localStorage.getItem("nomeAluno")
 let turma=localStorage.getItem("turmaAluno")
 
@@ -185,6 +187,8 @@ horario:new Date().toLocaleString()
 for(let i=1;i<=22;i++){
 dados["q"+i]=localStorage.getItem("questao"+i)||"vazio"
 }
+
+let scriptURL="https://script.google.com/macros/s/AKfycbxgchie5GEehVRD_4pVToRFHVN4i8kIx5HzTJ2qpGl0ouaBMTJq7OceY7lHb7wTdxCrgw/exec";
 
 fetch(scriptURL,{
 method:"POST",
@@ -392,6 +396,7 @@ alert("Trocar de aba não é permitido")
 
 </body>
 </html>
+
 
 
 
