@@ -119,10 +119,23 @@ margin-top:5px;
 <div class="container">
 
 <button class="finalizar" onclick="finalizarProva()">Finalizar Prova</button>
-
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 <script>
+  
+const firebaseConfig = {
+  apiKey: "AIzaSyC2rUFlyi4NJArcTg2wzDOFbUy90WxfmA8",
+  authDomain: "prova-mobile-67cf5.firebaseapp.com",
+  databaseURL: "https://prova-mobile-67cf5-default-rtdb.firebaseio.com",
+  projectId: "prova-mobile-67cf5",
+  storageBucket: "prova-mobile-67cf5.firebasestorage.app",
+  messagingSenderId: "489226438164",
+  appId: "1:489226438164:web:96701a37065d4afc540901",
+  measurementId: "G-BNKELDDRXV"
+};
 
-let scriptURL="https://script.google.com/macros/s/AKfycbxhKc2TpTn_0ivDH-FINYVc6h3NSG6VPMLJ75uyZJtDLpmdQ-t-DIZB1KQqp13Hx_jH4A/exec";
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
 let senhasPermitidas=[
 "mobile01","mobile02","mobile03","mobile04","mobile05",
@@ -186,23 +199,19 @@ for(let i=1;i<=22;i++){
 dados["q"+i]=localStorage.getItem("questao"+i)||"vazio"
 }
 
-fetch(scriptURL,{
-method:"POST",
-body:JSON.stringify(dados),
-headers:{
-"Content-Type":"application/json"
-}
-})
-.then(res=>res.json())
-.then(res=>{
+db.ref("provas").push(dados)
+
+.then(()=>{
 alert("Prova enviada com sucesso")
 })
-.catch(err=>{
-console.log(err)
+
+.catch((erro)=>{
+console.log(erro)
 alert("Erro ao enviar")
-});
+})
 
 }
+
 
 document.addEventListener("copy",e=>e.preventDefault())
 document.addEventListener("paste",e=>e.preventDefault())
@@ -392,6 +401,7 @@ alert("Trocar de aba não é permitido")
 
 </body>
 </html>
+
 
 
 
