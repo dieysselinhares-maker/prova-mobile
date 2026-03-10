@@ -95,8 +95,6 @@ margin-top:5px;
 
 <body>
 
-<!-- LOGIN -->
-
 <div class="login" id="telaLogin">
 <div class="box">
 
@@ -111,14 +109,7 @@ margin-top:5px;
 </div>
 </div>
 
-<!-- PROVA -->
-
 <div id="telaProva" style="display:none">
-
-<div id="telaEncerrada" style="display:none;text-align:center;margin-top:50px;">
-<h2>Prova Encerrada</h2>
-<p>Obrigado por participar. Suas respostas foram enviadas.</p>
-</div>
 
 <div class="header">
 <div>Prova de Programação Mobile</div>
@@ -129,11 +120,9 @@ margin-top:5px;
 
 <button class="finalizar" onclick="finalizarProva()">Finalizar Prova</button>
 
-<!-- QUESTÕES -->
-
 <script>
 
-let scriptURL="https://script.google.com/macros/s/AKfycbzQDCR9GTcRRDGN8u5yCkpK0ojuwzCxa7ptHw-uV_JH4xgUPHPMlq1Zm-zDQtgnUpBtsQ/exec";
+let scriptURL="https://script.google.com/macros/s/AKfycbxgchie5GEehVRD_4pVToRFHVN4i8kIx5HzTJ2qpGl0ouaBMTJq7OceY7lHb7wTdxCrgw/exec";
 
 let senhasPermitidas=[
 "mobile01","mobile02","mobile03","mobile04","mobile05",
@@ -194,30 +183,25 @@ horario:new Date().toLocaleString()
 }
 
 for(let i=1;i<=22;i++){
-
 dados["q"+i]=localStorage.getItem("questao"+i)||"vazio"
-
 }
 
-fetch("https://script.google.com/macros/s/AKfycbxCLUHZup_em8CpLyRL_4fjLIljov9dy5XkB2PbUMKvMj4oIMG2zaTl6DCTF1gY-IH2LQ/exec", {
-  method: "POST",
-  body: JSON.stringify(dados),
-  headers: {
-    "Content-Type": "application/json"
-  }
+fetch(scriptURL,{
+method:"POST",
+body:JSON.stringify(dados),
+headers:{
+"Content-Type":"application/json"
+}
 })
-.then(res => res.json())
-.then(res => {
-
-  alert("Prova enviada com sucesso");
-
+.then(res=>res.json())
+.then(res=>{
+alert("Prova enviada com sucesso")
 })
-.catch(err => {
-
-  console.log(err);
-  alert("Erro ao enviar");
-
+.catch(err=>{
+console.log(err)
+alert("Erro ao enviar")
 });
+
 }
 
 document.addEventListener("copy",e=>e.preventDefault())
@@ -228,11 +212,8 @@ document.addEventListener("contextmenu",e=>e.preventDefault())
 document.addEventListener("keydown",function(e){
 
 if(e.ctrlKey&&(e.key=="c"||e.key=="v"||e.key=="x")){
-
 e.preventDefault()
-
 alert("Copiar e colar não é permitido")
-
 }
 
 })
@@ -240,14 +221,13 @@ alert("Copiar e colar não é permitido")
 document.addEventListener("visibilitychange",function(){
 
 if(document.hidden){
-
 alert("Trocar de aba não é permitido")
-
 }
 
 })
 
 </script>
+
 
 <!-- QUESTÕES -->
 
@@ -412,5 +392,6 @@ alert("Trocar de aba não é permitido")
 
 </body>
 </html>
+
 
 
