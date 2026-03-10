@@ -199,30 +199,25 @@ dados["q"+i]=localStorage.getItem("questao"+i)||"vazio"
 
 }
 
-fetch(scriptURL,{
-method:"POST",
-body:JSON.stringify(dados),
-headers:{"Content-Type":"application/json"}
+fetch("https://script.google.com/macros/s/AKfycbzqUSQqmCC5h49kfs00WEAIaZ9760Eyf50NMFW2R6o90Dl3195lYj22OIwcY0E7Nms3/exec", {
+  method: "POST",
+  body: JSON.stringify(dados),
+  headers: {
+    "Content-Type": "application/json"
+  }
 })
-.then(res=>res.json())
-.then(res=>{
+.then(res => res.json())
+.then(res => {
 
-alert("Prova enviada com sucesso")
-
-document.querySelectorAll("textarea").forEach(t=>t.disabled=true)
-document.querySelectorAll("button").forEach(b=>b.disabled=true)
-
-document.getElementById("telaEncerrada").style.display="block"
+  alert("Prova enviada com sucesso");
 
 })
-.catch(err=>{
+.catch(err => {
 
-alert("Erro ao enviar prova")
+  console.log(err);
+  alert("Erro ao enviar");
 
-console.log(err)
-
-})
-
+});
 }
 
 document.addEventListener("copy",e=>e.preventDefault())
@@ -417,3 +412,4 @@ alert("Trocar de aba não é permitido")
 
 </body>
 </html>
+
