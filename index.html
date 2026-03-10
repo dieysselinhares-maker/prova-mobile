@@ -124,6 +124,11 @@ margin-top:5px;
 
 <div id="telaProva" style="display:none">
 
+<div id="telaEncerrada" style="display:none; text-align:center; margin-top:50px;">
+  <h2>Prova Encerrada</h2>
+  <p>Obrigado por participar. Suas respostas foram enviadas com sucesso.</p>
+</div>
+
 <div class="header">
 
 <div>Prova de Programação Mobile</div>
@@ -166,6 +171,28 @@ function finalizar() {
 // BLOQUEIOS
 document.addEventListener("copy", e => e.preventDefault())
 // ...
+
+function enviarParaSheets(){
+    let url = "https://script.google.com/macros/s/AKfycbz9_4O6EmAnNOnRnBDlSUXZTV1SnrgR4W5gFSTNoo9daen1QpzOnvIc6ylcbvBy6SyksQ/exec"; // substitua pela URL do Apps Script
+
+    let dados = {
+        nome: localStorage.getItem("nomeAluno"),
+        turma: localStorage.getItem("turmaAluno")
+    };
+
+    for(let i=1; i<=22; i++){
+        dados["q"+i] = localStorage.getItem("questao"+i);
+    }
+
+    fetch(url, {
+        method: "POST",
+        body: JSON.stringify(dados),
+        headers: {"Content-Type": "application/json"}
+    })
+    .then(res => res.json())
+    .then(res => console.log("Enviado para Sheets:", res))
+    .catch(err => console.error("Erro ao enviar:", err));
+}
 </script>
 
 <div class="questao">
@@ -483,15 +510,29 @@ document.getElementById("s"+n).innerText="Resposta salva"
 
 // FINALIZAR
 function finalizar(){
-let fim = new Date()
-alert("Prova enviada")
-console.log("Aluno:", localStorage.getItem("nomeAluno"))
-console.log("Turma:", localStorage.getItem("turmaAluno"))
-console.log("Início:", localStorage.getItem("inicioProva"))
-console.log("Fim:", fim)
-console.log("Q1:", localStorage.getItem("questao1"))
-console.log("Q2:", localStorage.getItem("questao2"))
-console.log("Q3:", localStorage.getItem("questao3"))
+    let fim = new Date();
+
+    alert("Prova enviada");
+
+    // Log no console (opcional)
+    console.log("Aluno:", localStorage.getItem("nomeAluno"));
+    console.log("Turma:", localStorage.getItem("turmaAluno"));
+    console.log("Início:", localStorage.getItem("inicioProva"));
+    console.log("Fim:", fim);
+
+    // Mostra todas as respostas no console
+    for(let i=1; i<=22; i++){
+        console.log("Q"+i+":", localStorage.getItem("questao"+i));
+    }
+
+    // ESCONDER A PROVA
+    document.getElementById("telaProva").style.display = "none";
+
+    // MOSTRAR TELA DE ENCERRAMENTO
+    document.getElementById("telaEncerrada").style.display = "block";
+
+    // Enviar para Google Sheets
+    enviarParaSheets();
 }
 
 // BLOQUEIOS
