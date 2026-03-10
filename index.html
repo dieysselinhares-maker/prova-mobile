@@ -172,26 +172,38 @@ function finalizar() {
 document.addEventListener("copy", e => e.preventDefault())
 // ...
 
-function enviarParaSheets(){
-    let url = "https://script.google.com/macros/s/AKfycbzBP-3De575ftx_mJ_ipIqLC_TVPFs2cERx6L-M_4OUj0BVRMKuhnCgFFguGPwMYKvfKQ/exec"; // substitua pela URL do Apps Script
+function enviarParaSheets() {
+    // URL do seu Apps Script publicado como Web App
+    let url = "COLE_AQUI_A_URL_DO_WEBAPP"; 
 
+    // Pegando os dados do localStorage
     let dados = {
         nome: localStorage.getItem("nomeAluno"),
         turma: localStorage.getItem("turmaAluno")
     };
 
-    for(let i=1; i<=22; i++){
-        dados["q"+i] = localStorage.getItem("questao"+i);
+    // Pegando todas as respostas (1 a 22)
+    for (let i = 1; i <= 22; i++) {
+        dados["q" + i] = localStorage.getItem("questao" + i) || ""; // evita null
     }
 
+    // Enviando via fetch
     fetch(url, {
         method: "POST",
         body: JSON.stringify(dados),
-        headers: {"Content-Type": "application/json"}
+        headers: {
+            "Content-Type": "application/json"
+        }
     })
-    .then(res => res.json())
-    .then(res => console.log("Enviado para Sheets:", res))
-    .catch(err => console.error("Erro ao enviar:", err));
+    .then(res => res.json()) // converte resposta do Apps Script em JSON
+    .then(res => {
+        console.log("Enviado para Sheets:", res);
+        alert("Respostas enviadas com sucesso!");
+    })
+    .catch(err => {
+        console.error("Erro ao enviar:", err);
+        alert("Erro ao enviar respostas. Confira a URL do Web App e se a planilha está configurada corretamente.");
+    });
 }
 </script>
 
@@ -559,3 +571,4 @@ alert("Trocar de aba não é permitido!")
 </body>
 
 </html>
+
