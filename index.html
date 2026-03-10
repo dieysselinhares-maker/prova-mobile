@@ -150,56 +150,93 @@ function entrar() {
    // código de login
 }
 
+// SALVAR RESPOSTA INDIVIDUAL
 function salvar(n) {
-   // código de salvar resposta
+    let resposta = document.getElementById("q" + n).value || "vazio"; // pega texto ou "vazio"
+    localStorage.setItem("questao" + n, resposta); // salva no localStorage
+    document.getElementById("s" + n).innerText = "Resposta salva"; // feedback visual
 }
 
-function finalizar() {
-   // aqui você coloca o código que vai registrar todas as respostas
-   let fim = new Date()
-   alert("Prova enviada")
-   console.log("Aluno:", localStorage.getItem("nomeAluno"))
-   console.log("Turma:", localStorage.getItem("turmaAluno"))
-   console.log("Início:", localStorage.getItem("inicioProva"))
+// FINALIZAR PROVA - enviar todas as respostas para o Sheets
+function finalizarProva() {
+    // para timer se houver
+    if(typeof timerInterval !== "undefined") clearInterval(timerInterval);
 
-   // Se tiver 15 perguntas
-   for(let i=1; i<=15; i++){
-       console.log("Q"+i+":", localStorage.getItem("questao"+i))
-   }
+    let nome = localStorage.getItem("nomeAluno");
+    let turma = localStorage.getItem("turmaAluno");
+
+    if(!nome || !turma) { 
+        alert("Preencha seu nome e turma antes de finalizar."); 
+        return; 
+    }
+
+    // Pega todas as respostas armazenadas no localStorage
+    let dados = {
+        nome: nome,
+        turma: turma,
+        horario: new Date().toLocaleString()
+    };
+
+    // Supondo 22 perguntas
+    for(let i=1; i<=22; i++){
+        dados["q"+i] = localStorage.getItem("questao"+i) || "vazio";
+    }
+
+    // Envia para o Google Sheets
+    fetch("https://script.google.com/macros/s/AKfycbxgCmQesuOZPx29QGFvTnSxz2eiTY-ChYyNSymF2JyD6hPTTTqHszI4muEdNjCCt0fC/exec", {
+        method: "POST",
+        body: JSON.stringify(dados),
+        headers: {"Content-Type": "application/json"}
+    })
+    .then(res => res.json())
+    .then(res => {
+        if(res.status === "ok") {
+            alert("Prova enviada com sucesso!");
+        } else {
+            alert("Erro no servidor: " + (res.mensagem || "tente novamente"));
+        }
+
+        // Bloquear campos e botões após envio
+        document.querySelectorAll("textarea").forEach(t => t.disabled = true);
+        document.querySelectorAll("button").forEach(b => b.disabled = true);
+
+        // Mostrar todas respostas no console (opcional)
+        console.log("Respostas enviadas:");
+        for(let i=1; i<=22; i++){
+            console.log("Q"+i+":", dados["q"+i]);
+        }
+    })
+    .catch(err => {
+        console.error("Erro ao enviar dados:", err);
+        alert("Erro ao enviar. Tente novamente.");
+    });
+}
+
+// Função auxiliar caso você use botão "Finalizar" simples
+function finalizar() {
+    finalizarProva(); // apenas chama a função principal
 }
 
 // BLOQUEIOS
-document.addEventListener("copy", e => e.preventDefault())
-// ...
+document.addEventListener("copy", e => e.preventDefault());
+document.addEventListener("paste", e => e.preventDefault());
+document.addEventListener("cut", e => e.preventDefault());
+document.addEventListener("contextmenu", e => e.preventDefault());
 
-function enviarParaSheets(){
-  let url = "https://script.google.com/macros/s/AKfycbzQZ7bv3JRCecpMlfkEW74IIH8TSFrIWOQUGtIDyBkvxzLKMagaqYC-sE38n94EI3Fn/exec"; // substitua pela URL do Web App
+document.addEventListener("keydown", function(e){
+    if(e.ctrlKey && (e.key === "c" || e.key === "v" || e.key === "x")){
+        e.preventDefault();
+        alert("Copiar, colar ou recortar não é permitido");
+    }
+});
 
-  let dados = {
-    nome: localStorage.getItem("nomeAluno"),
-    turma: localStorage.getItem("turmaAluno")
-  };
+// Detectar troca de aba
+document.addEventListener("visibilitychange", function(){
+    if(document.hidden){
+        alert("Trocar de aba não é permitido!");
+    }
+});
 
-  for(let i=1; i<=22; i++){
-    dados["q"+i] = localStorage.getItem("questao"+i) || "";
-  }
-
-  fetch(url, {
-    method: "POST",
-    body: JSON.stringify(dados),
-    headers: {"Content-Type": "application/json"}
-  })
-  .then(res => res.json())
-  .then(res => {
-      if(res.status === "ok"){
-          console.log("Enviado para Sheets com sucesso");
-      } else {
-          console.error("Erro no Sheets:", res.mensagem);
-      }
-  })
-  .catch(err => console.error("Erro ao enviar:", err));
-}
-  
 </script>
 
 <div class="questao">
@@ -549,6 +586,7 @@ alert("Trocar de aba não é permitido!")
 </body>
 
 </html>
+
 
 
 
