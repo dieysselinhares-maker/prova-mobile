@@ -172,39 +172,28 @@ function finalizar() {
 document.addEventListener("copy", e => e.preventDefault())
 // ...
 
-function enviarParaSheets() {
-    // URL do seu Apps Script publicado como Web App
-    let url = "https://script.google.com/macros/s/AKfycbwsWJTYWjKBFFP7P8hjBVONLPSdTOgVJNRnyAYo9IidHA1kf28iv9x_40SMGkOpUhCs/exec"; 
+function enviarParaSheets(){
+  let url = "https://script.google.com/macros/s/AKfycbwxTFIsCIuVe4wGTd4yTnbIw5tpZXvVN57zbcqOv0ve-XFvdjKi5iGGNbaHjXD7SjkT/exec"; // a URL do Apps Script que você publicou
 
-    // Pegando os dados do localStorage
-    let dados = {
-        nome: localStorage.getItem("nomeAluno"),
-        turma: localStorage.getItem("turmaAluno")
-    };
+  let dados = {
+    nome: localStorage.getItem("nomeAluno"),
+    turma: localStorage.getItem("turmaAluno")
+  };
 
-    // Pegando todas as respostas (1 a 22)
-    for (let i = 1; i <= 22; i++) {
-        dados["q" + i] = localStorage.getItem("questao" + i) || ""; // evita null
-    }
+  for(let i=1; i<=22; i++){
+    dados["q"+i] = localStorage.getItem("questao"+i) || "";
+  }
 
-    // Enviando via fetch
-    fetch(url, {
-        method: "POST",
-        body: JSON.stringify(dados),
-        headers: {
-            "Content-Type": "application/json"
-        }
-    })
-    .then(res => res.json()) // converte resposta do Apps Script em JSON
-    .then(res => {
-        console.log("Enviado para Sheets:", res);
-        alert("Respostas enviadas com sucesso!");
-    })
-    .catch(err => {
-        console.error("Erro ao enviar:", err);
-        alert("Erro ao enviar respostas. Confira a URL do Web App e se a planilha está configurada corretamente.");
-    });
+  fetch(url, {
+    method: "POST",
+    body: JSON.stringify(dados),
+    headers: {"Content-Type": "application/json"}
+  })
+  .then(res => res.json())
+  .then(res => console.log("Enviado para Sheets:", res))
+  .catch(err => console.error("Erro ao enviar:", err));
 }
+  
 </script>
 
 <div class="questao">
@@ -571,6 +560,7 @@ alert("Trocar de aba não é permitido!")
 </body>
 
 </html>
+
 
 
 
